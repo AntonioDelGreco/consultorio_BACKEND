@@ -1,9 +1,6 @@
-import { Router } from "express";
-
+const { Router } = require('express');
 const router = Router();
+const { crear } = require('../controllers/turnos.controller.js');
 
-router.get('/turnos', async (req, res) => {
-  res.send('En desarrollo')
-})
-
-export default router;
+router.post('/turnos', crear)
+module.exports = router;
