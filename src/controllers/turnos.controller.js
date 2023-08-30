@@ -1,6 +1,4 @@
-const TurnosManagers = require('../managers/turnos.managers.js');
 const enviarMail = require('../managers/email.managers.js');
-const manager = new TurnosManagers();
 
 const crear = async (req, res) => {
   //variables
@@ -37,13 +35,6 @@ const crear = async (req, res) => {
       )
     }
 
-    const response = await manager.createTurno(newTurno);
-    if(!response[1]) {
-      throw new Error(
-        'Ya existe un turno agendado para ese día o sus datos ya han sido registrados.', 
-        { cause: 409 }
-        )
-      }
     const responseMail = await enviarMail(newTurno);
     if (responseMail) {
       throw new Error(
