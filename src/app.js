@@ -11,12 +11,11 @@ const corsOptions = {
   methods: 'POST',
   credentials: true,
 };
-app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
-app.use('/', turnosRouter);
-app.use('/', contactoRouter);
+app.use('/', cors(corsOptions), turnosRouter);
+app.use('/', cors(corsOptions), contactoRouter);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));
