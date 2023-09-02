@@ -15,34 +15,20 @@ const sendEmail = async (req, res) => {
     for (let i = 0; i < datos.length; i++) {
       const valorLimpio = datos[i].trim();
       if (!valorLimpio) {
-        throw new Error('Valores incompletos.', { cause: 400 });
+        throw { message: 'Valores incompletos.', status: 400 };
       } else {
         newMail[claves[i]] = valorLimpio;
       }
     }
-    if(!newMail.nombre.match(validacionNombre)) {
-      throw new Error(
-        'El nombre no es válido.', 
-        { cause: 400 }
-      )
-    }
-    if(!newMail.celular.match(validacionNumero)) {
-      throw new Error(
-        'El celular no es válido.', 
-        { cause: 400 }
-      )
-    }
+    if(!newMail.nombre.match(validacionNombre)) throw { message: 'El nombre no es válido.', status: 400 };
+    if(!newMail.celular.match(validacionNumero)) throw { message: 'El celular no es válido.', status: 400 };
 
     const response = await enviarMail(newMail);
-    if(response) {
-      throw new Error(
-        'Su email falló en ser enviado. Por favor, intente de nuevo más tarde o intente por WhatsApp.', 
-        { cause: 409 }
-      )
-    }
+    if(response) throw { message: 'Su email falló en ser enviado. Por favor, intente de nuevo más tarde o intente por WhatsApp.', status: 409 }; 
+
     res.status(200).json({ success:true, message:'Su email se envió exitosamente' })
   } catch (error) {
-    res.status(error.cause).json({ success: false, message: error.message })
+    res.status(error.status || 500).json({ success: false, message: error.message })
   }
 }
 
