@@ -1,9 +1,9 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
-const corsOptions = require("./config/config.js");
-const contactoRouter = require('./routes/contacto.router.js');
-const turnosRouter = require('./routes/turnos.router.js');
+const corsOptions = require("./src/config/config.js");
+const contactoRouter = require('./src/routes/contacto.router.js');
+const turnosRouter = require('./src/routes/turnos.router.js');
 
 dotenv.config()
 const app = express();
